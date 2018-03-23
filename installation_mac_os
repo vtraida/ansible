@@ -1,0 +1,9 @@
+sudo easy_install pip
+sudo pip install ansible
+ansible --version
+ansible 2.5.0
+  config file = None
+  configured module search path = [u'/Users/vadym_traida/.ansible/plugins/modules', u'/usr/share/ansible/plugins/modules']
+  ansible python module location = /Library/Python/2.7/site-packages/ansible
+  executable location = /usr/local/bin/ansible
+  python version = 2.7.10 (default, Jul 15 2017, 17:16:57) [GCC 4.2.1 Compatible Apple LLVM 9.0.0 (clang-900.0.31)]
