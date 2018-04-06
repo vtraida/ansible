@@ -57,7 +57,11 @@ config.vm.network "forwarded_port", guest: 80, host: 8080
   # config.vm.network "public_network", bridge: "en1: Wi-Fi (AirPort)"
   #config.vm.network "public_network", bridge: "Intel(R) 82579LM Gigabit Network Connection"
   
-  config.vm.network "public_network", bridge: "en0: Wi-Fi (AirPort)"
+  config.vm.network "public_network", bridge: [
+  "en0: Wi-Fi (AirPort)",
+  "en0: Ethernet",
+]
+  
     #use_dhcp_assigned_default_route: true
  
   # Share an additional folder to the guest VM. The first argument is
