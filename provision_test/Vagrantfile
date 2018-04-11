@@ -102,6 +102,8 @@ config.vm.network "forwarded_port", guest: 80, host: 8080
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
  #config.vm.provision :shell, path: "provision.sh"
- config.vm.provision "shell", inline: "cat /host_files/keys/public/vtraida-18key.pub > ~/.ssh/authorized_keys"
- 
-end
+ #config.vm.provision "shell", inline: "cat /host_files/keys/public/vtraida-18key.pub > ~/.ssh/authorized_keys"
+config.vm.provision "ansible" do |ansible|
+  ansible.playbook = "playbook.yml"
+  end
+ end
