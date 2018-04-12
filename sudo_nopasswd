@@ -2,4 +2,5 @@ let ansible Run ‘sudo’ Command Without Entering a Password in Linux
 https://www.tecmint.com/run-sudo-command-without-password-linux/
 
 sudo visudo
+#in the end of file
 vtraida ALL=(ALL) NOPASSWD: ALL
