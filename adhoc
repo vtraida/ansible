@@ -1,0 +1,3 @@
+# install app
+#u16>>pc or group name
+ansible u16 -b -m apt -a "name=mc state=present"
