@@ -1,0 +1,43 @@
+---
+- hosts: u16
+  become: yes
+  tasks:
+  - name: repos enabled
+    apt_repository: repo='{{item}}' state=present update_cache=yes
+    with_items:
+    - ppa:ansible/ansible
+  #- name: install mcansible........
+   # apt: name=ansible state=present
+
+  - name: software install
+    apt: name='{{ item }}' state=present update_cache=yes
+    with_items:
+    - mc
+    - ansible
+    - tmux
+
+  - name: Install packages and dependencies
+    apt: name={{ item }} update_cache=yes state=present
+    with_items:
+    - default-jdk
+    - libfontconfig
+    - libffi-dev
+    - libncurses5-dev
+
+  - name: Add the Jenkins public GPG key to the apt repo
+    apt_key: url=http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key
+           state=present
+
+  - name: Add Jenkins to the trusted sources list
+    apt_repository: repo='deb http://pkg.jenkins-ci.org/debian binary/'
+                  update_cache=yes
+                  state=present
+  - name: Install Jenkins server
+    apt: name=jenkins state=present
+  
+  - name: get contents of file - Jenkins pass
+    shell: cat /var/lib/jenkins/secrets/initialAdminPassword
+    register: pass
+    become: true
+  - name: Unlock Jenkins password
+    debug: var=pass.stdout_lines
