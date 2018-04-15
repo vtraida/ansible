@@ -1,0 +1,12 @@
+---
+
+- hosts: f27
+  #gather_facts: false
+  become: yes
+  tasks:
+  - name: install the latest version of ssh
+    dnf: 
+      name: openssh-server
+      state: latest
+    
+
