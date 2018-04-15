@@ -1,0 +1,10 @@
+   srv_eva: Running ansible-playbook...
+ [WARNING]: Could not match supplied host pattern, ignoring: eva1
+
+
+PLAY [eva1] ********************************************************************
+skipping: no hosts matched
+
+PLAY RECAP *********************************************************************
+
+acer-pc:provision_test vtraida$
