@@ -1,7 +1,11 @@
 ---
 #https://github.com/geerlingguy/ansible-role-jenkins/
 #https://github.com/jcalazan/ansible-jenkins
-- hosts: eva1
+
+#for vagrant pay attention >>> hosts: = name in global status
+#  config.vm.define "srv_eva"
+- hosts: srv_eva777
+#- hosts: all
   become: yes
   tasks:
   #need check
@@ -25,8 +29,9 @@
     apt: name=jenkins state=present
   
   - name: get contents of file - Jenkins pass
-    shell: cat /var/lib/jenkins/secrets/initialAdminPassword
-    register: pass7778
+    command: cat /var/lib/jenkins/secrets/initialAdminPassword
+    register: jenkins11
     become: true
   - name: Unlock Jenkins password
-    debug: var=pass7778.stdout_lines
+    debug: msg={{jenkins11.stdout_lines}}
+    #debug: var=xxx.stdout_lines

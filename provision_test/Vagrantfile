@@ -28,7 +28,7 @@ Vagrant.configure("2") do |config|
   #!!!The hostname set for the VM should only contain letters, numbers,hyphens or dots. It cannot start with a hyphen or dot.
   config.vm.hostname = "srv-eva1"
   #@vtraida name in global status
-  config.vm.define "srv_eva"
+  config.vm.define "srv_eva777"
   #@vtraida
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -106,7 +106,8 @@ config.vm.network "forwarded_port", guest: 8080, host: 8080
  #config.vm.provision "shell", inline: "cat /host_files/keys/public/vtraida-18key.pub > ~/.ssh/authorized_keys"
  config.vm.provision "ansible" do |ansible|
  ansible.playbook = "jenkins_install.yml"
-  
-  
+ #ansible.verbose = true
+ 
+ config.vm.provision :shell, path: "jenkins-pass.sh" 
   end
 end
