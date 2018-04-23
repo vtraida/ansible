@@ -1,0 +1,31 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+config.vm.provision "shell", inline: "echo Hello"
+config.vm.provision :shell, path: "install_python.sh"
+config.vm.box = "ubuntu/xenial64"
+
+config.vm.provider :virtualbox do |v|
+end
+
+# lenkins server
+  config.vm.define "srv-j" do |srv|
+  #srv.vm.box = "ubuntu/xenial64"
+  srv.vm.hostname = "srv-j.test"
+  srv.vm.network :private_network, ip: "192.168.60.101"
+  srv.vm.network "forwarded_port", guest: 8080, host: 8080
+  srv.vm.provider :virtualbox do |v|
+    v.name = 'srv-j'  
+  end
+ end
+# jenkins slave
+  config.vm.define "slave-j" do |slave|
+  #slave.vm.box = "ubuntu/xenial64"
+  slave.vm.hostname = "slave-j.test"
+  slave.vm.network :private_network, ip: "192.168.60.102"
+  slave.vm.provider :virtualbox do |v|
+    v.name = 'slave-j'
+   end
+  end
+end
