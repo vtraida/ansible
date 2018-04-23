@@ -30,7 +30,7 @@ end
   db.vm.hostname = "orc-db.test"
   db.vm.network :private_network, ip: "192.168.60.6"
  end
- config.vm.provision "ansible" do |ansible|
-    ansible.playbook = "jenkins_install.yml"
- end   
+ #config.vm.provision "ansible" do |ansible|
+ #   ansible.playbook = "jenkins_install.yml"
+ #end   
 end
