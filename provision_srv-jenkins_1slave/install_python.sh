@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-apt update
-apt install -y python
+apt-get update
+apt-get install -y python
 

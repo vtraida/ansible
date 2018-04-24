@@ -4,15 +4,15 @@
 
 #for vagrant pay attention >>> hosts: = name in global status
 #  config.vm.define "srv_eva"
-- hosts: srv_eva777
-#- hosts: all
+- hosts: srv-j
   become: yes
   tasks:
   #need check
   - name: Install packages and dependencies
-    apt: name={{ item }} update_cache=yes state=present
+    apt: name={{ item }} update_cache=yes state=latest
     with_items:
     - default-jdk
+    - default-jre
     - libfontconfig
     - libffi-dev
     - libncurses5-dev
@@ -27,15 +27,30 @@
                   state=present
   - name: Install Jenkins server
     apt: name=jenkins state=present
-  - name: Wait until the file /var/lib/jenkins/secrets/initialAdminPassword is present before continuing
-    wait_for:
-      path: /var/lib/jenkins/secrets/initialAdminPassword 
+  #- name: Wait until the file /var/lib/jenkins/secrets/initialAdminPassword is present before continuing
+  #  wait_for:
+  #    path: /var/lib/jenkins/secrets/initialAdminPassword 
   - name: get contents of file - Jenkins pass
     command: cat /var/lib/jenkins/secrets/initialAdminPassword
     register: jenkins111111
     become: true
+    ignore_errors: true
   - name: Unlock Jenkins password
     debug: msg={{jenkins111111.stdout_lines}}
     #debug: var=xxx.stdout_lines
-  - name: add pub key
-    shell: echo ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDtHA0cFhEINJCdmX58236T7Pp/JjETOjKGHlx3TVAPA7WVW4kkQsdFFmDThxqY5unPbthtcS99s3ThA/CH0ztP7ULUaD4QJJcav1jrunpfOoCo+WfA1p39pYHf4ASgb185F6k+ZV1tP0RWohmGhRTyq2HLCz0jxvzBXGSuSpPB9NjwSRVq3e3WtYXp4z6ia+wIigWPmCrZPAv6bZRMdvUvbLRLGOoRc/kiu3jIdkZdqrpX9CukOJNkTX3Qz/Jo8NmsPBfwhx7EHW+kw7lKQbrrPqwuvYn6kAhZV4iIC7HirbLACYil/PCjJaCnaYvz6vRX/I7k1P/t2waIs4zLLfDx2Q2N4gSHHjHqM/4+zRP+I6LpO/iwBVqWwYFGTqnc3A8FdPQjEYa3Uqc9++jAq7DuvKVOTSQI3teDdQeHJJWhVrAR1TCFCC6IfjwnLg0JhZ0TsXdcRm08CziV+55McqqmcTVrFaRNEQqOkXirF9UhPdTT9NE7Eif4apFpASJWZeSxj3Yk0d+0BZjf2QbZ3AcsfFK84grdYaXllVpGcUldzxvZb8oi91XFzEBsi2JjNu02QQ6GA5XKP9oOzNxzMg8Q/bmdWRtKZBKB7QEweAHtTEiGtzZiCrBu1ZmgTzF0JUdzlHYvdTXWDsGYrJqAwyA2427rRK4NitpkGvlU2WKPvw== vtraida@gmail.com >> .ssh/authorized_keys  
+  - name: Add the user fof jenkins
+    user:
+      name: adminjenkins
+      shell: /bin/bash
+      comment: Jenkins slave user
+      group: jenkins
+      create_home: yes  
+  - name: Set authorized key took from file
+    authorized_key:
+      user: adminjenkins
+      state: present
+      key: "{{ lookup('file', '/Users/vtraida/vtraida-18key.pub') }}"
+  
+
+#  - name: add pub key
+#    shell: echo ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDtHA0cFhEINJCdmX58236T7Pp/JjETOjKGHlx3TVAPA7WVW4kkQsdFFmDThxqY5unPbthtcS99s3ThA/CH0ztP7ULUaD4QJJcav1jrunpfOoCo+WfA1p39pYHf4ASgb185F6k+ZV1tP0RWohmGhRTyq2HLCz0jxvzBXGSuSpPB9NjwSRVq3e3WtYXp4z6ia+wIigWPmCrZPAv6bZRMdvUvbLRLGOoRc/kiu3jIdkZdqrpX9CukOJNkTX3Qz/Jo8NmsPBfwhx7EHW+kw7lKQbrrPqwuvYn6kAhZV4iIC7HirbLACYil/PCjJaCnaYvz6vRX/I7k1P/t2waIs4zLLfDx2Q2N4gSHHjHqM/4+zRP+I6LpO/iwBVqWwYFGTqnc3A8FdPQjEYa3Uqc9++jAq7DuvKVOTSQI3teDdQeHJJWhVrAR1TCFCC6IfjwnLg0JhZ0TsXdcRm08CziV+55McqqmcTVrFaRNEQqOkXirF9UhPdTT9NE7Eif4apFpASJWZeSxj3Yk0d+0BZjf2QbZ3AcsfFK84grdYaXllVpGcUldzxvZb8oi91XFzEBsi2JjNu02QQ6GA5XKP9oOzNxzMg8Q/bmdWRtKZBKB7QEweAHtTEiGtzZiCrBu1ZmgTzF0JUdzlHYvdTXWDsGYrJqAwyA2427rRK4NitpkGvlU2WKPvw== vtraida@gmail.com >> .ssh/authorized_keys  
