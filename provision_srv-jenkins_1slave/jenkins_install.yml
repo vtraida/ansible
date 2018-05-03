@@ -33,7 +33,7 @@
   - name: get contents of file - Jenkins pass
     command: cat /var/lib/jenkins/secrets/initialAdminPassword
     register: jenkins111111
-    become: true
+    #become: true
     ignore_errors: true
   - name: Unlock Jenkins password
     debug: msg={{jenkins111111.stdout_lines}}
@@ -49,7 +49,7 @@
     authorized_key:
       user: adminjenkins
       state: present
-      key: "{{ lookup('file', '/Users/vtraida/vtraida-18key.pub') }}"
+      key: "{{ lookup('file', '/home/vtraida/vtraida-18key.pub') }}"
   
 
 #  - name: add pub key
