@@ -33,11 +33,9 @@
   - name: get contents of file - Jenkins pass
     command: cat /var/lib/jenkins/secrets/initialAdminPassword
     register: jenkins111111
-    #become: true
     ignore_errors: true
   - name: Unlock Jenkins password
     debug: msg={{jenkins111111.stdout_lines}}
-    #debug: var=xxx.stdout_lines
   - name: Add the user fof jenkins
     user:
       name: adminjenkins
