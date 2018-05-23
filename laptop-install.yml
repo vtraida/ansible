@@ -1,0 +1,7 @@
+---
+- name: a playbook to setup my local machine with my basic customizations
+  hosts: localhost
+  connection: localhost
+  become: yes
+  roles:
+   - install_vbox
