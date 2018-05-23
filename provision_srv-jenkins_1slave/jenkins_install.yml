@@ -16,6 +16,7 @@
     - libfontconfig
     - libffi-dev
     - libncurses5-dev
+    - maven
 
   - name: Add the Jenkins public GPG key to the apt repo
     apt_key: url=http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key
@@ -47,8 +48,14 @@
     authorized_key:
       user: adminjenkins
       state: present
-      key: "{{ lookup('file', '/home/vtraida/vtraida-18key.pub') }}"
-  
+      key: "{{ lookup('file', '/my_key/vtraida-18key.pub') }}"
+  - name: copying private key with owner and permissions
+    copy:
+      src: /my_key/vtraida-18key
+      dest: /home/adminjenkins/.ssh
+      owner: adminjenkins
+      group: jenkins
+      mode: 0770
 
 #  - name: add pub key
 #    shell: echo ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDtHA0cFhEINJCdmX58236T7Pp/JjETOjKGHlx3TVAPA7WVW4kkQsdFFmDThxqY5unPbthtcS99s3ThA/CH0ztP7ULUaD4QJJcav1jrunpfOoCo+WfA1p39pYHf4ASgb185F6k+ZV1tP0RWohmGhRTyq2HLCz0jxvzBXGSuSpPB9NjwSRVq3e3WtYXp4z6ia+wIigWPmCrZPAv6bZRMdvUvbLRLGOoRc/kiu3jIdkZdqrpX9CukOJNkTX3Qz/Jo8NmsPBfwhx7EHW+kw7lKQbrrPqwuvYn6kAhZV4iIC7HirbLACYil/PCjJaCnaYvz6vRX/I7k1P/t2waIs4zLLfDx2Q2N4gSHHjHqM/4+zRP+I6LpO/iwBVqWwYFGTqnc3A8FdPQjEYa3Uqc9++jAq7DuvKVOTSQI3teDdQeHJJWhVrAR1TCFCC6IfjwnLg0JhZ0TsXdcRm08CziV+55McqqmcTVrFaRNEQqOkXirF9UhPdTT9NE7Eif4apFpASJWZeSxj3Yk0d+0BZjf2QbZ3AcsfFK84grdYaXllVpGcUldzxvZb8oi91XFzEBsi2JjNu02QQ6GA5XKP9oOzNxzMg8Q/bmdWRtKZBKB7QEweAHtTEiGtzZiCrBu1ZmgTzF0JUdzlHYvdTXWDsGYrJqAwyA2427rRK4NitpkGvlU2WKPvw== vtraida@gmail.com >> .ssh/authorized_keys  
