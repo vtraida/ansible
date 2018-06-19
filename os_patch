@@ -1,3 +1,4 @@
+https://www.youtube.com/watch?v=7al0yehXa_g&t=0s&list=PLLsor6GJ_BEEC9jUSc760iqaOx6u5lqRA&index=8
 [root@ansible-master ansible]# cat hosts
 [dev-redhat]
 testserver1
