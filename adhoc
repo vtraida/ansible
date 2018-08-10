@@ -20,3 +20,9 @@ All packages are up to date.
 WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
 
 ansible vtraida$ ansible u16 -b -B 600 -a "apt -y upgrade"
+
+###Gathering Facts
+#Facts can be used for implementing conditional statements in playbook. 
+#You can find adhoc information of all your facts through the following Ad-hoc command
+$ ansible all -i ~/github/zabbix/hosts -m setup | less
+$ ansible zabbix-test -i ~/github/zabbix/hosts -m setup | less
